@@ -131,6 +131,9 @@ static void ctxt_switch_from(struct vcpu *p)
     p->arch.ttbcr = READ_SYSREG(TCR_EL1);
     p->arch.ttbr0 = READ_SYSREG64(TTBR0_EL1);
     p->arch.ttbr1 = READ_SYSREG64(TTBR1_EL1);
+
+	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",__func__,__LINE__,p->domain->domain_id,p->vcpu_id,p->arch.ttbr0);
+
     if ( is_32bit_domain(p->domain) )
         p->arch.dacr = READ_SYSREG(DACR32_EL2);
     p->arch.par = READ_SYSREG64(PAR_EL1);
