@@ -34,8 +34,9 @@ void vm_event_fill_regs(vm_event_request_t *req)
 
     if (1 || ttbr0_prev != req->data.regs.arm.ttbr0)
     {
-	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
+	printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
+        WARN_ON (0);
         ttbr0_prev = req->data.regs.arm.ttbr0;
     }
 }
@@ -47,7 +48,7 @@ void vm_event_set_registers(struct vcpu *v, vm_event_response_t *rsp)
     /* vCPU should be paused */
     ASSERT(atomic_read(&v->vm_event_pause_count));
 
-    printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
+    printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, current->domain->domain_id, current->vcpu_id, rsp->data.regs.arm.ttbr0);
 
     regs->pc = rsp->data.regs.arm.pc;
