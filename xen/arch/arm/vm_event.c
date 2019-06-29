@@ -36,7 +36,7 @@ void vm_event_fill_regs(vm_event_request_t *req)
     {
 	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
-        ttbr0_prev != req->data.regs.arm.ttbr0;
+        ttbr0_prev = req->data.regs.arm.ttbr0;
         
     }
 }
