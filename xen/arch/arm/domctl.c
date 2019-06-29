@@ -193,7 +193,8 @@ void arch_get_info_guest(struct vcpu *v, vcpu_guest_context_u c)
 
     vcpu_regs_hyp_to_user(v, regs);
 
-    if (1 || ttbr0_prev != v->arch.ttbr0)
+    if (v->domain->domain_id != 0 &&
+        (1 || ttbr0_prev != v->arch.ttbr0))
     {
         printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, v->domain->domain_id, v->vcpu_id, v->arch.ttbr0);

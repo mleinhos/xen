@@ -278,6 +278,9 @@ void vm_event_put_request(struct domain *d,
     RING_IDX req_prod;
     struct vcpu *curr = current;
 
+    printk("DEBUG %s %d d=%d\n",
+           __func__, __LINE__,  d->domain_id);
+
     if( !vm_event_check_ring(ved))
         return;
 
@@ -330,6 +333,9 @@ int vm_event_get_response(struct domain *d, struct vm_event_domain *ved,
 {
     vm_event_front_ring_t *front_ring;
     RING_IDX rsp_cons;
+
+    printk("DEBUG %s %d d=%d\n",
+           __func__, __LINE__,  d->domain_id);
 
     vm_event_ring_lock(ved);
 

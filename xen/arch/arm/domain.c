@@ -135,7 +135,7 @@ static void ctxt_switch_from(struct vcpu *p)
     p->arch.ttbr1 = READ_SYSREG64(TTBR1_EL1);
 
     if (p->domain->domain_id != 0 &&
-        1 || ttbr0_prev != p->arch.ttbr0)
+        (1 || ttbr0_prev != p->arch.ttbr0))
     {
 	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, p->domain->domain_id, p->vcpu_id, p->arch.ttbr0);        

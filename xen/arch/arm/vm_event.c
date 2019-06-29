@@ -47,6 +47,9 @@ void vm_event_set_registers(struct vcpu *v, vm_event_response_t *rsp)
     /* vCPU should be paused */
     ASSERT(atomic_read(&v->vm_event_pause_count));
 
+    printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
+               __func__, __LINE__, current->domain->domain_id, current->vcpu_id, rsp->data.regs.arm.ttbr0);
+
     regs->pc = rsp->data.regs.arm.pc;
 }
 
