@@ -18,6 +18,8 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define DEBUG_TRACE_DUMP
+
 #include <xen/sched.h>
 #include <asm/vm_event.h>
 
@@ -36,7 +38,9 @@ void vm_event_fill_regs(vm_event_request_t *req)
     {
 	printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
-        WARN_ON (0);
+        WARN();
+        // define DEBUG_TRACE_DUMP
+        debugtrace_dump();
         ttbr0_prev = req->data.regs.arm.ttbr0;
     }
 }
