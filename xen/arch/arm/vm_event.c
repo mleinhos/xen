@@ -45,10 +45,10 @@ void vm_event_fill_regs(vm_event_request_t *req)
             cttbr = ((struct arch_cpu *)c.cmp)->ttbr0;
         }
 
-	printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx vttbr=%lx  ctx_ttbr0=%lx\n",
+	printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx ctx_ttbr0=%lx\n",
                __func__, __LINE__, current->domain->domain_id, current->vcpu_id,
                req->data.regs.arm.ttbr0,
-               READ_SYSREG64(VTTBR),
+               // READ_SYSREG64(VTTBR), VTTBR not defined
                cttbr);
         //WARN(); -- not useful
 
