@@ -27,6 +27,7 @@ void vm_event_fill_regs(vm_event_request_t *req)
 {
     const struct cpu_user_regs *regs = guest_cpu_user_regs();
     static unsigned long ttbr0_prev = 0;
+//    unsigned long vttbr = 0;
 
     req->data.regs.arm.cpsr = regs->cpsr;
     req->data.regs.arm.pc = regs->pc;
@@ -36,8 +37,10 @@ void vm_event_fill_regs(vm_event_request_t *req)
 
     if (1 || ttbr0_prev != req->data.regs.arm.ttbr0)
     {
-	printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx\n",
-               __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
+	printk("DEBUG %s:%d d=%d v=%d ttbr0=%lx vttbr=%lx\n",
+               __func__, __LINE__, current->domain->domain_id, current->vcpu_id,
+               req->data.regs.arm.ttbr0,
+               READ_SYSREG64(VTTBR));
         //WARN(); -- not useful
 
         // define DEBUG_TRACE_DUMP
