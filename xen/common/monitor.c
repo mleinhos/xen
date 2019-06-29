@@ -124,6 +124,10 @@ int monitor_traps(struct vcpu *v, bool sync, vm_event_request_t *req)
     }
 
     vm_event_fill_regs(req);
+
+    printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
+           __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
+
     vm_event_put_request(d, d->vm_event_monitor, req);
 
     return rc;

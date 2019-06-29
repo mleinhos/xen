@@ -32,12 +32,11 @@ void vm_event_fill_regs(vm_event_request_t *req)
     req->data.regs.arm.ttbr0 = READ_SYSREG64(TTBR0_EL1);
     req->data.regs.arm.ttbr1 = READ_SYSREG64(TTBR1_EL1);
 
-    if (ttbr0_prev != req->data.regs.arm.ttbr0)
+    if (1 || ttbr0_prev != req->data.regs.arm.ttbr0)
     {
 	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
         ttbr0_prev = req->data.regs.arm.ttbr0;
-        
     }
 }
 
