@@ -93,6 +93,9 @@ static void ctxt_switch_from(struct vcpu *p)
     /* When the idle VCPU is running, Xen will always stay in hypervisor
      * mode. Therefore we don't need to save the context of an idle VCPU.
      */
+    unsigned long ttrb0 = 0;
+    static unsigned long ttrb0_prev = 0;
+    
     if ( is_idle_vcpu(p) )
         return;
 
@@ -132,7 +135,11 @@ static void ctxt_switch_from(struct vcpu *p)
     p->arch.ttbr0 = READ_SYSREG64(TTBR0_EL1);
     p->arch.ttbr1 = READ_SYSREG64(TTBR1_EL1);
 
-	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",__func__,__LINE__,p->domain->domain_id,p->vcpu_id,p->arch.ttbr0);
+    if (ttbr0_prev != p->arch.ttbr0)
+    {
+	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",__func__,__LINE__,p->domain->domain_id,p->vcpu_id,p->arch.ttbr0);        
+        ttbr0_prev = p->arch.ttbr0;
+    }
 
     if ( is_32bit_domain(p->domain) )
         p->arch.dacr = READ_SYSREG(DACR32_EL2);

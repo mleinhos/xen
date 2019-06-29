@@ -24,6 +24,7 @@
 void vm_event_fill_regs(vm_event_request_t *req)
 {
     const struct cpu_user_regs *regs = guest_cpu_user_regs();
+    static unsigned long ttrb0_prev = 0;
 
     req->data.regs.arm.cpsr = regs->cpsr;
     req->data.regs.arm.pc = regs->pc;
@@ -31,8 +32,13 @@ void vm_event_fill_regs(vm_event_request_t *req)
     req->data.regs.arm.ttbr0 = READ_SYSREG64(TTBR0_EL1);
     req->data.regs.arm.ttbr1 = READ_SYSREG64(TTBR1_EL1);
 
-	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",__func__,__LINE__,current->domain->domain_id,current->vcpu_id,req->data.regs.arm.ttbr0);
-
+    if (ttbr0_prev != req->data.regs.arm.ttbr0)
+    {
+	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
+               __func__, __LINE__, current->domain->domain_id, current->vcpu_id, req->data.regs.arm.ttbr0);
+        ttbr0_prev != req->data.regs.arm.ttbr0;
+        
+    }
 }
 
 void vm_event_set_registers(struct vcpu *v, vm_event_response_t *rsp)

@@ -189,10 +189,16 @@ void arch_get_info_guest(struct vcpu *v, vcpu_guest_context_u c)
 {
     struct vcpu_guest_context *ctxt = c.nat;
     struct vcpu_guest_core_regs *regs = &c.nat->user_regs;
+    static unsigned long ttrb0_prev = 0;
 
     vcpu_regs_hyp_to_user(v, regs);
 
-  printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",__func__,__LINE__,v->domain->domain_id,v->vcpu_id,v->arch.ttbr0);
+    if (ttbr0_prev != v->arch.ttbr0)
+    {
+        printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
+               __func__, __LINE__, v->domain->domain_id, v->vcpu_id, v->arch.ttbr0);
+        ttbr0_prev = v->arch.ttbr0;
+    }
 
     ctxt->sctlr = v->arch.sctlr;
     ctxt->ttbr0 = v->arch.ttbr0;
