@@ -189,7 +189,7 @@ void arch_get_info_guest(struct vcpu *v, vcpu_guest_context_u c)
 {
     struct vcpu_guest_context *ctxt = c.nat;
     struct vcpu_guest_core_regs *regs = &c.nat->user_regs;
-    static unsigned long ttrb0_prev = 0;
+    static unsigned long ttbr0_prev = 0;
 
     vcpu_regs_hyp_to_user(v, regs);
 

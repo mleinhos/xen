@@ -24,7 +24,7 @@
 void vm_event_fill_regs(vm_event_request_t *req)
 {
     const struct cpu_user_regs *regs = guest_cpu_user_regs();
-    static unsigned long ttrb0_prev = 0;
+    static unsigned long ttbr0_prev = 0;
 
     req->data.regs.arm.cpsr = regs->cpsr;
     req->data.regs.arm.pc = regs->pc;
