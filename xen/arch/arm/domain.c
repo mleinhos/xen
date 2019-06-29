@@ -95,8 +95,8 @@ static void ctxt_switch_from(struct vcpu *p)
      */
     static unsigned long ttbr0_prev = 0;
     
-    if ( is_idle_vcpu(p) )
-        return;
+//    if ( is_idle_vcpu(p) )
+//        return;
 
     p2m_save_state(p);
 
@@ -134,7 +134,8 @@ static void ctxt_switch_from(struct vcpu *p)
     p->arch.ttbr0 = READ_SYSREG64(TTBR0_EL1);
     p->arch.ttbr1 = READ_SYSREG64(TTBR1_EL1);
 
-    if (ttbr0_prev != p->arch.ttbr0)
+    if (p->domain->domain_id != 0 &&
+        1 || ttbr0_prev != p->arch.ttbr0)
     {
 	printk("DEBUG %s %d d=%d v=%d ttbr0=%lx\n",
                __func__, __LINE__, p->domain->domain_id, p->vcpu_id, p->arch.ttbr0);        
