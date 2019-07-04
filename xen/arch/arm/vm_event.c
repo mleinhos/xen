@@ -21,15 +21,18 @@
 #include <xen/sched.h>
 #include <asm/vm_event.h>
 
-void vm_event_fill_regs(vm_event_request_t *req)
+void vm_event_fill_regs(struct vcpu* v, vm_event_request_t *req)
 {
     const struct cpu_user_regs *regs = guest_cpu_user_regs();
 
     req->data.regs.arm.cpsr = regs->cpsr;
     req->data.regs.arm.pc = regs->pc;
-    req->data.regs.arm.ttbcr = READ_SYSREG(TCR_EL1);
-    req->data.regs.arm.ttbr0 = READ_SYSREG64(TTBR0_EL1);
-    req->data.regs.arm.ttbr1 = READ_SYSREG64(TTBR1_EL1);
+    req->data.regs.arm.ttbcr = v->arch.ttbcr;
+    req->data.regs.arm.ttbr0 = v->arch.ttbr0;
+    req->data.regs.arm.ttbr1 = v->arch.ttbr1;
+
+    printk("DEBUG current=%d current_domain=%d req_vcpu=%d req_domain=%d current_ttbr0=%lx req_ttbr0=%lx\n",
+            current->vcpu_id, current->domain->domain_id, v->vcpu_id, v->domain->domain_id, req->data.regs.arm.ttbr0, v->arch.ttbr0);
 }
 
 void vm_event_set_registers(struct vcpu *v, vm_event_response_t *rsp)

@@ -75,7 +75,7 @@ int vm_event_domctl(struct domain *d, struct xen_domctl_vm_event_op *vec,
 void vm_event_vcpu_pause(struct vcpu *v);
 void vm_event_vcpu_unpause(struct vcpu *v);
 
-void vm_event_fill_regs(vm_event_request_t *req);
+void vm_event_fill_regs(struct vcpu *v, vm_event_request_t *req);
 void vm_event_set_registers(struct vcpu *v, vm_event_response_t *rsp);
 
 void vm_event_monitor_next_interrupt(struct vcpu *v);

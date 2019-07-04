@@ -123,7 +123,7 @@ int monitor_traps(struct vcpu *v, bool sync, vm_event_request_t *req)
         req->altp2m_idx = altp2m_vcpu_idx(v);
     }
 
-    vm_event_fill_regs(req);
+    vm_event_fill_regs(v, req);
     vm_event_put_request(d, d->vm_event_monitor, req);
 
     return rc;
