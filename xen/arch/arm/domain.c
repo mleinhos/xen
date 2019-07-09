@@ -126,6 +126,9 @@ static void ctxt_switch_from(struct vcpu *p)
 
     isb();
 
+    printk("DEBUG %s:%d current=%d current_domain=%d req_vcpu=%d req_domain=%d p->arch.ttbr0=%lx READ_SYSREG64(ttbr0)=%lx\n",
+           __func__, __LINE__, current->vcpu_id, current->domain->domain_id, p->vcpu_id, p->domain->domain_id, p->arch.ttbr0, READ_SYSREG64(TTBR0_EL1);
+
     /* MMU */
     p->arch.vbar = READ_SYSREG(VBAR_EL1);
     p->arch.ttbcr = READ_SYSREG(TCR_EL1);
@@ -208,6 +211,9 @@ static void ctxt_switch_to(struct vcpu *n)
         WRITE_SYSREG(n->arch.ifsr, IFSR32_EL2);
     WRITE_SYSREG(n->arch.afsr0, AFSR0_EL1);
     WRITE_SYSREG(n->arch.afsr1, AFSR1_EL1);
+
+    printk("DEBUG %s:%d current=%d current_domain=%d req_vcpu=%d req_domain=%d p->arch.ttbr0=%lx READ_SYSREG64(ttbr0)=%lx\n",
+           __func__, __LINE__, current->vcpu_id, current->domain->domain_id, p->vcpu_id, p->domain->domain_id, p->arch.ttbr0, READ_SYSREG64(TTBR0_EL1);
 
     /* MMU */
     WRITE_SYSREG(n->arch.vbar, VBAR_EL1);
